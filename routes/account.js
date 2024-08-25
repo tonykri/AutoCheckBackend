@@ -4,6 +4,7 @@ const catchAsync=require('../utils/catchAsync');
 const Account=require('../models/Account');
 const accounts=require('../controllers/accountController');
 const passport = require('passport');
+const {isLoggedIn}=require('../middleware');
 
 router.route('/register')
     .post(catchAsync(accounts.register));
@@ -11,6 +12,6 @@ router.route('/register')
 router.route('/login')
     .post(passport.authenticate('local') ,accounts.login);
 
-router.get('/logout',accounts.logout);
+router.get('/logout',isLoggedIn,accounts.logout);
 
 module.exports=router;

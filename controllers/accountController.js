@@ -1,19 +1,27 @@
 const Account=require('../models/Account');
-const passport = require('passport');
+const ExpressError = require('../utils/ExpressError');
+const {passwordValidator} = require('../validators/passwordValidator');
+const {usernameValidator} = require('../validators/usernameValidator');
 
 module.exports.register=async(req,res)=>{
     try{
     const {username, password, email, role} = req.body;
+    usernameValidator(username);
+    passwordValidator(password);
     const account = new Account({username, password, email, role});
-    const registeredUser=await Account.register(account,password);
-    req.login(registeredUser,err=>{   
-        if(err) return next(err);
-        res.status(200).json({
-            message: 'Logged in successfully!'
-        });
-    })
+    await Account.register(account,password);
+    await account.save();
+    res.status(200).json({
+        message: 'Registered successfully!'
+    });
     }catch(e){
-        res.status(500).json(e);
+        if (e.statusCode === 400) 
+            throw new ExpressError(e.message, 400)
+
+        if (e.code === 11000) 
+            throw new ExpressError("Username or email already exists.", 409)
+
+        throw new ExpressError(e.message, 500)
     }
 }
 

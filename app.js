@@ -10,6 +10,7 @@ const LocalStrategy=require('passport-local');
 const Account=require('./models/Account');
 
 const accountRoutes=require('./routes/account');
+const userRoutes=require('./routes/user');
 
 
 
@@ -58,6 +59,7 @@ passport.deserializeUser(Account.deserializeUser());
 
 // Routes Config
 app.use('/auth',accountRoutes);
+app.use('/user',userRoutes);
 
 app.all('*',(req,res,next)=>{
     next(new ExpressError('Page Not Found',404));
