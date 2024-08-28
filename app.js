@@ -9,9 +9,10 @@ const passport=require('passport');
 const LocalStrategy=require('passport-local');
 const Account=require('./models/Account');
 
-const accountRoutes=require('./routes/account');
-const userRoutes=require('./routes/user');
-
+const accountRoutes=require('./routes/accountRouter');
+const userRoutes=require('./routes/userRouter');
+const professionalRoutes=require('./routes/professionalRouter');
+const applicationRoutes=require('./routes/applicationRouter');
 
 
 // DB Connection Config
@@ -60,18 +61,20 @@ passport.deserializeUser(Account.deserializeUser());
 // Routes Config
 app.use('/auth',accountRoutes);
 app.use('/user',userRoutes);
+app.use('/professional',professionalRoutes);
+app.use('/applications',applicationRoutes);
 
 app.all('*',(req,res,next)=>{
     next(new ExpressError('Page Not Found',404));
-})
+});
 
 app.use((err,req,res,next)=>{
     const {statusCode=500,message='Something went wrong'}=err;
     if(!err.message) err.message='Something Went Wrong';
     res.status(statusCode).json(err);
-})
+});
 
 const port=process.env.PORT ||4000; 
 app.listen(port,()=>{
     console.log(`SERVING ON PORT ${port}!`);
-})
+});

@@ -1,7 +1,6 @@
 const express=require('express');
 const router =express.Router();
 const catchAsync=require('../utils/catchAsync');
-const Account=require('../models/Account');
 const accounts=require('../controllers/accountController');
 const passport = require('passport');
 const {isLoggedIn}=require('../middleware');
