@@ -5,7 +5,10 @@ const passportLocalMongoose = require('passport-local-mongoose');
 const validateEmail = (email) => {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailRegex.test(email);
-};
+}
+function validatePhoneNumber(phoneNumber) {
+    return /^\+?[0-9]{7,15}$/.test(phoneNumber);
+}
 
 const AccountSchema = new Schema({
     email: {
@@ -16,6 +19,16 @@ const AccountSchema = new Schema({
         validate: {
             validator: validateEmail,
             message: props => `${props.value} is not a valid email address!`
+        }
+    },
+    phoneNumber: {
+        type: String,
+        required: [true, 'Phone number is required.'],
+        unique: true,
+        trim: true,
+        validate: {
+            validator: validatePhoneNumber,
+            message: props => `${props.value} is not a valid phone number!`
         }
     },
     role: {

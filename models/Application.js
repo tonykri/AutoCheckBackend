@@ -22,6 +22,10 @@ const ApplicationSchema=new Schema({
         ref: 'Account',
         required: true
     },
+    professional: {
+        type: Schema.Types.ObjectId,
+        ref: 'Professional'
+    },
     appliedAt: {
         type:Date,
         required: true,

@@ -5,10 +5,10 @@ const {usernameValidator} = require('../validators/usernameValidator');
 
 module.exports.register=async(req,res)=>{
     try{
-    const {username, password, email, role} = req.body;
+    const {username, password, email, role, phoneNumber} = req.body;
     usernameValidator(username);
     passwordValidator(password);
-    const account = new Account({username, password, email, role});
+    const account = new Account({username, password, email, role, phoneNumber});
     await Account.register(account,password);
     await account.save();
     res.status(200).json({
