@@ -9,7 +9,7 @@ module.exports.registerUser=async(req,res)=>{
         if (userExists) 
             throw new ExpressError(`User exists.`, 400)
 
-        const user = User({firstname, lastname, birthdate, account: loggedInUser})
+        const user = User({firstname, lastname, birthdate, account: loggedInUser});
         await user.save();
 
         res.status(200).json({

@@ -14,6 +14,7 @@ const userRoutes=require('./routes/userRouter');
 const professionalRoutes=require('./routes/professionalRouter');
 const applicationRoutes=require('./routes/applicationRouter');
 const applicationInterestRoutes=require('./routes/applicationInterestRouter');
+const reviewRoutes=require('./routes/reviewRouter');
 
 
 // DB Connection Config
@@ -65,6 +66,7 @@ app.use('/user',userRoutes);
 app.use('/professional',professionalRoutes);
 app.use('/applications',applicationRoutes);
 app.use('/applications/interest',applicationInterestRoutes);
+app.use('/reviews',reviewRoutes);
 
 app.all('*',(req,res,next)=>{
     next(new ExpressError('Page Not Found',404));

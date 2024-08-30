@@ -49,15 +49,6 @@ const ProfessionalSchema=new Schema({
         ref: 'Account',
         required: true
     },
-    activeUntil: {
-        type:Date,
-        required: true,
-        default: () => {
-            const date = new Date();
-            date.setMonth(date.getMonth() + 1);
-            return date;
-        }
-    },
     workingPlaces: {
         type: [Number],
         required: true,

@@ -9,7 +9,7 @@ module.exports.registerProfessional = async (req, res) => {
         if (professionalExists) 
             throw new ExpressError(`Professional exists.`, 400)
 
-        const professional = Professional({firstname, lastname, birthdate, account: loggedInUser, workingPlaces, engineCategories})
+        const professional = Professional({firstname, lastname, birthdate, account: loggedInUser, workingPlaces, engineCategories});
         await professional.save();
 
         res.status(200).json({

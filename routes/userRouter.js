@@ -8,7 +8,7 @@ router.route('/register')
     .post(userLoggedIn,catchAsync(users.registerUser));
 
 router.route('/update')
-    .post(userLoggedIn,catchAsync(users.updateUser));
+    .put(userLoggedIn,catchAsync(users.updateUser));
 
 router.route('/profile')
     .get(userLoggedIn,catchAsync(users.getUser));
