@@ -11,3 +11,5 @@ router.route('/')
 
 router.get('/myreviews', userLoggedIn, catchAsync(reviews.getMyReviews));
 router.get('/myreview', userLoggedIn, catchAsync(reviews.getUserProfessionalReview));
+
+module.exports = router;

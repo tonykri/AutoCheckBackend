@@ -11,3 +11,5 @@ router.route('/')
 
 router.get('/all', professionalLoggedIn, catchAsync(applications.getApplications));
 router.get('/me', userLoggedIn, catchAsync(applications.getMyApplications));
+
+module.exports = router;

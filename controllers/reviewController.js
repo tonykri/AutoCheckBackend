@@ -66,7 +66,7 @@ module.exports.updateReview = async (req, res) => {
 module.exports.getProfessionalReviews = async (req, res) => {
     try {
         const {professionalId, page=1} = req.query;
-        const professionalExists = await Professional.exists(professionalId);
+        const professionalExists = await Professional.exists({id: professionalId});
         if (!professionalExists) 
             throw new ExpressError('Professional not found.', 404);
         const reviews = await Review.find({ professional: professionalId }).populate('user')
@@ -84,7 +84,7 @@ module.exports.getProfessionalReviews = async (req, res) => {
 module.exports.getMyReviews = async (req, res) => {
     try {
         const {page=1} = req.query;
-        const user = await User.findById(req.user.id);
+        const user = await User.findOne({account: req.user.id});
         const reviews = await Review.find({ user: user.id }).populate('professional')
             .skip((page - 1) * 10) 
             .limit(10);
@@ -100,7 +100,7 @@ module.exports.getMyReviews = async (req, res) => {
 module.exports.getUserProfessionalReview = async (req, res) => {
     try {
         const {professionalId} = req.query;
-        const professionalExists = await Professional.exists(professionalId);
+        const professionalExists = await Professional.exists({id: professionalId});
         if (!professionalExists) 
             throw new ExpressError('Professional not found.', 404);
         const user = await User.findById(req.user.id);

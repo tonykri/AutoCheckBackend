@@ -80,7 +80,7 @@ module.exports.getApplications = async (req, res) => {
 module.exports.getMyApplications = async (req, res) => {
     try {
         const { page=1, status } = req.query;
-        const applications = [];
+        let applications = [];
         if (status)
             applications = await Application.find({status: status, user: req.user.id})
                 .skip((page - 1) * 10) 
@@ -90,8 +90,7 @@ module.exports.getMyApplications = async (req, res) => {
                 .skip((page - 1) * 10) 
                 .limit(10);
 
-        res.status(200).json(applications);
-        
+                res.status(200).json(applications);
     }catch (e) {
         throw e;
     }

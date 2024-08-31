@@ -49,7 +49,7 @@ module.exports.getMyApplicationInterests = async (req, res) => {
 module.exports.getApplicants = async (req, res) => {
     try {
         const {page =1, applicationId} = req.query;
-        const applicationExists = await Application.exists(applicationId);
+        const applicationExists = await Application.exists({ id: applicationId });
         if(!applicationExists)
             throw new ExpressError('Application with id ' + applicationId + ' does not exist.', 404);
         const professionals = await ApplicationInterest.find({ application: applicationId }).populate('professional')
